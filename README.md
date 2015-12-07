@@ -24,3 +24,15 @@ while(q.length) {
   q.dequeue(); // 1, 2, 3
 }
 ```
+
+Queues can also be enqueued from the constructor, and `enqueue` can take multiple arguments.
+
+```javascript
+var q = new Queue(1, 2, 3);
+
+q.enqueue(4, 5, 6);
+
+while(q.length) {
+  q.dequeue(); // 1, 2, 3, 4, 5, 6
+}
+```

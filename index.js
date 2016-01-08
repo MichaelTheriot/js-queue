@@ -117,4 +117,8 @@ Queue.prototype[Symbol.iterator] = function () {
   };
 };
 
+Queue.prototype.toJSON = function () {
+  return [...this];
+};
+
 module.exports = Queue;

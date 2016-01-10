@@ -108,11 +108,7 @@ Queue.prototype[Symbol.iterator] = function () {
   return {
     next: function () {
       node = node ? node.nextNode : store.startNode;
-      if(finished = finished || node === undefined) {
-        return {value: undefined, done: finished};
-      } else {
-        return {value: node.item, done: finished};
-      }
+      return {value: (finished = finished || node === undefined) ? undefined : node.item, done: finished};
     }
   };
 };

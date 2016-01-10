@@ -21,18 +21,11 @@ function Queue() {
   }
 }
 
-(function (arrFrom) {
-  Queue.from = function from(item) {
-    var arr = arrFrom(item);
-    var queue = new Queue();
-    for(var i = 0; i < arr.length; i++) {
-      queue.enqueue(arr[i]);
-    }
-    return queue;
-  };
-})(Array.from);
+Queue.from = function from(iterable) {
+  return new Queue(...iterable);
+};
 
-Queue.prototype.enqueue = function (item) {
+Queue.prototype.enqueue = function enqueue(item) {
   var store = stores.get(this);
   for(var i = 0; i < arguments.length; item = arguments[++i]) {
     var node = new Node(item);
@@ -46,7 +39,7 @@ Queue.prototype.enqueue = function (item) {
   return store.length;
 };
 
-Queue.prototype.dequeue = function () {
+Queue.prototype.dequeue = function dequeue() {
   var store = stores.get(this);
   var node = store.startNode;
   if(node) {
@@ -58,7 +51,7 @@ Queue.prototype.dequeue = function () {
   }
 };
 
-Queue.prototype.unshift = function (item) {
+Queue.prototype.unshift = function unshift(item) {
   var store = stores.get(this);
   for(var i = 0; i < arguments.length; item = arguments[++i]) {
     var node = new Node(item, store.startNode);
@@ -71,7 +64,7 @@ Queue.prototype.unshift = function (item) {
   return store.length;
 };
 
-Queue.prototype.pop = function () { // O(n)
+Queue.prototype.pop = function pop() { // O(n)
   var store = stores.get(this);
   var node, endNode = store.endNode;
   for(node = store.startNode; node !== store.endNode && node.nextNode !== store.endNode; node = node.nextNode);
@@ -84,22 +77,26 @@ Queue.prototype.pop = function () { // O(n)
   }
 };
 
-Queue.prototype.first = function () {
-  return stores.get(this).startNode;
-};
-
-Queue.prototype.last = function () {
-  return stores.get(this).endNode;
-};
+Object.defineProperties(Queue.prototype, {
+  first: {
+    get: function () {
+      return stores.get(this).startNode;
+    }
+  },
+  last: {
+    get: function () {
+      return stores.get(this).endNode;
+    }
+  },
+  length: {
+    get: function () {
+      return stres.get(this).length;
+    }
+  }
+});
 
 Queue.prototype.push = Queue.prototype.enqueue;
 Queue.prototype.shift = Queue.prototype.dequeue;
-
-Object.defineProperty(Queue.prototype, 'length', {
-  get: function () {
-    return stores.get(this).length;
-  }
-});
 
 Queue.prototype[Symbol.iterator] = function () {
   var store = stores.get(this);

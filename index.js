@@ -90,7 +90,7 @@ Object.defineProperties(Queue.prototype, {
   },
   length: {
     get: function () {
-      return stres.get(this).length;
+      return stores.get(this).length;
     }
   }
 });

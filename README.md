@@ -61,11 +61,11 @@ var q = new Queue(5, 6, 7);
 q.pop(); // 7
 ```
 
-## .first()
+## .first
 
 Returns the first item in the queue without removing it.
 
-## .last()
+## .last
 
 Returns the last item in the queue without removing it.
 
